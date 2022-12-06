@@ -1,17 +1,32 @@
 fun main() {
     fun part1(input: List<String>): Int {
-        return input.size
+        val floor = input.first().fold(0) { floor, char ->
+            when (char) {
+                '(' -> floor + 1
+                ')' -> floor - 1
+                else -> floor
+            }
+        }
+        return floor
     }
 
     fun part2(input: List<String>): Int {
-        return input.size
+        var firstBasement = 0
+        var floor = 0
+        input.first().forEachIndexed { index, char ->
+            when (char) {
+                '(' -> floor++
+                ')' -> floor--
+            }
+            if (floor == -1) {
+                firstBasement = (index + 1)
+                return firstBasement
+            }
+        }
+        return firstBasement
     }
 
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
-
-    val input = readInput("Day01")
+    val input = readInput("dayone")
     println(part1(input))
     println(part2(input))
 }
